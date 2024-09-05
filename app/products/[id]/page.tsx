@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid2";
 
 export default async function ProductPage({ params }: { params: { id: string } }) {
 
-  const product = await _getProductById(params.id)
+  const product = await _getProductById(Number(params.id))
 
   return (
     <>

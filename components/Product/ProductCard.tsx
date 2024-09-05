@@ -1,6 +1,11 @@
 import { Card, CardActionArea, CardContent, CardMedia, Typography } from "@mui/material"
+import { Product } from "@/TS_Types/products_type";
 
-const ProductCard = ({ sx = {}, product}) => {
+interface Props{
+  sx?: {},
+  product: Product
+}
+const ProductCard = ({ sx = {}, product}:Props) => {
   const title_length = 25;
   return(
     <Card 
