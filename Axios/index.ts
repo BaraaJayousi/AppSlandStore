@@ -6,11 +6,12 @@ const axiosInstance = axios.create({
   // timeout: 10000,
 });
 
-//Fetches all products from the backend (fakestore)
+// Fetches all products from the backend (fakestore)
 const _getProducts = async () : Promise<Product[]> =>{
   const {data} = await axiosInstance.get('/products');
   return data;
 }
+
 
 //Fetches a product from the backend (fakestore)
 const _getProductById =  async (id:number) =>{

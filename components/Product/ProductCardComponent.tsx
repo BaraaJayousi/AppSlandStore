@@ -13,7 +13,7 @@ const ProductCard = ({ sx = {}, product}:Props) => {
         minWidth: 250,
         minHeight:250,
         mx:{xs:2, md:0},
-        ...sx }} >
+        ...sx }}>
       <CardActionArea href={`products/${product.id}`}>
         <CardMedia
           component="img"

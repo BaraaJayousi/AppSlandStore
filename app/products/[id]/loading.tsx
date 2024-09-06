@@ -11,7 +11,7 @@ export default function Loading() {
         </Grid>
       </Grid >
       <Grid container sx={{ width: '100%' }}>
-        {Array(20).fill(null).map((arr:Number) =>{
+        {Array(5).fill(null).map((arr:Number) =>{
           return(
             <Grid key={arr + ''} size={{xs:12, md:4, lg:3}} >
               <Skeleton variant="rounded" width="100%" height={270} />

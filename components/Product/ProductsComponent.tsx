@@ -1,54 +1,68 @@
 'use client';
 
 import Grid from "@mui/material/Grid2";
-import CategoriesFilter from "./CategoriesFilter";
-import ProductCard from "./ProductCard";
 import { _getAllCategories, _getProducts, _getProductsInCategory } from "@/Axios";
-import { Product } from "@/TS_Types/products_type";
-import { usePathname, useSearchParams } from 'next/navigation';
+import ProductCard from "./ProductCardComponent";
 import { useEffect, useState } from "react";
+import { Product } from "@/TS_Types/products_type";
+import { useSearchParams } from "next/navigation";
+import SearchComponent from "./SearchComponent";
 
-const ProductsComponent = async () => {
+const ProductsPage =  () => {
 
-  const [products, setProducts] = useState<Product[]>([]);
-  const [categories, setCategories] = useState<string[]>([]);
-  const categoryParams = useSearchParams();
-  const currentCategory = categoryParams.get('category')
+  const [products, setProducts] = useState<Product[]>([])
+  const [filteredProducts, setFilteredProducts] = useState<Product[]>([])
+  const [searchInput, setSearchInput] = useState('')
+  const currentParams = useSearchParams();
+  const currentCategory  = currentParams.get('category')
+  const currentSearch = currentParams.get('search')
 
-  useEffect(() =>{
-    const fetchProducts = async () =>{
-      if(currentCategory?.length == 0 || currentCategory == 'all' || currentCategory == undefined){
-        setProducts(await _getProducts());
-      }else{
-        setProducts(await _getProductsInCategory(currentCategory));
-      }
+  
+  
+  useEffect(() => {
+    if(currentCategory?.length == 0 || currentCategory == 'all' || currentCategory == undefined){
+      _getProducts().then(res => setProducts(res))
+
+    }else{
+      _getProductsInCategory(currentCategory).then(res => setProducts(res))
     }
 
-    const fetchCategories = async ()  =>{
-      const cata = await _getAllCategories();
-      setCategories(['all', ...cata]);
-    }
+  },[])
 
-    fetchCategories();
-    fetchProducts();
-  }, [])
+  const searchProducts = (searchValue : string) =>{
+    setSearchInput(searchValue)
+    if(searchValue !== ''){
+      const filteredData = products.filter((product) =>{
+        return Object.values(product.title).join('').toLowerCase().includes(searchValue.toLowerCase())
+      });
+      setFilteredProducts(filteredData);
+    }else{
+      setFilteredProducts(products);
+    }
+  }
   
   return(
-    <Grid container justifyContent="center" spacing={2} sx={{my:2.5, width: '100%'}} >
-      <Grid container >
-        <CategoriesFilter categories={categories}/>
+    <Grid container spacing={2} sx={{my:2.5, width: '100%'}} >
+      <Grid container  justifyContent="center"  sx={{ width: '100%'}}>
+        <Grid size ={{xs:12, md:6}}>
+          <SearchComponent onSearchInput={searchProducts} />
+        </Grid>
       </Grid>
-      <Grid container>
-        {products.map((product: Product) =>{
-          return(
-            <Grid key={product.id} size={{xs:12, md:4, lg:3}} >
-              <ProductCard product={product}/>
-            </Grid>
-          )
-        })}
-      </Grid>
+      {searchInput.length > 1? filteredProducts.map((product: Product) =>{
+        return(
+          <Grid key={product.id} size={{xs:12, md:4, lg:3}} >
+            <ProductCard product={product}/>
+          </Grid>
+        )
+      }): products.map((product: Product) =>{
+        return(
+          <Grid key={product.id} size={{xs:12, md:4, lg:3}} >
+            <ProductCard product={product}/>
+          </Grid>
+        )
+      })}
     </Grid>
   )
 }
 
-export default ProductsComponent;
+export default ProductsPage;
