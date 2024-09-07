@@ -6,10 +6,16 @@ const axiosInstance = axios.create({
   // timeout: 10000,
 });
 
-// Fetches all products from the backend (fakestore)
-const _getProducts = async () : Promise<Product[]> =>{
-  const {data} = await axiosInstance.get('/products');
-  return data;
+// Fetches all products from the backend (fakestore),
+//if given a category it fetches the products in that category
+const _getProducts = async (category : string | null = '') : Promise<Product[]> =>{
+  let response 
+  if(category?.length == 0 || category == 'all' || category == undefined){
+    response = await axiosInstance.get('/products');
+  }else{
+    response = await axiosInstance.get(`/products/category/${category}`);
+  }
+  return response.data;
 }
 
 
@@ -25,9 +31,9 @@ const _getAllCategories = async () : Promise<string[]> => {
   return data;
 }
 
-const _getProductsInCategory = async (category:string) : Promise<Product[]> =>{
-  const {data} = await axiosInstance.get(`/products/category/${category}`);
-  return data;
-}
+// const _getProductsInCategory = async (category:string) : Promise<Product[]> =>{
+//   const {data} = await axiosInstance.get(`/products/category/${category}`);
+//   return data;
+// }
 
-export { _getProducts, _getProductById, _getAllCategories, _getProductsInCategory};
+export { _getProducts, _getProductById, _getAllCategories};
