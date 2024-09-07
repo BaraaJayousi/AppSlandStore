@@ -7,8 +7,12 @@ import { Suspense } from "react";
 export default async function ProductsPage() {
   return (
     <>
+      <Suspense>
         <CategoriesFilter />
+      </Suspense>
+      <Suspense>
         <ProductsComponent />
+      </Suspense>
     </>
   );
 }
