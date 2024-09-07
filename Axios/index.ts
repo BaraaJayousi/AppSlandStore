@@ -18,6 +18,15 @@ const _getProducts = async (category : string | null = '') : Promise<Product[]> 
   return response.data;
 }
 
+const _postSignIn  = async (username: string, password: string) : Promise<string> =>{
+
+  const {data} = await axiosInstance.post('/auth/login', {
+    username: username,
+    password: password
+  });
+  console.log(data)
+  return data;
+}
 
 //Fetches a product from the backend (fakestore)
 const _getProductById =  async (id:number) =>{
@@ -36,4 +45,4 @@ const _getAllCategories = async () : Promise<string[]> => {
 //   return data;
 // }
 
-export { _getProducts, _getProductById, _getAllCategories};
+export { _getProducts, _getProductById, _getAllCategories, _postSignIn};

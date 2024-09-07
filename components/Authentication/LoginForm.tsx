@@ -24,6 +24,7 @@ import { Formik } from 'formik';
 // Icons
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
+import { signinAction } from '@/actions/auth';
 
 const LoginForm = () => {
 
@@ -43,7 +44,7 @@ const LoginForm = () => {
       <Formik
         initialValues={{
           username: 'mor_2314',
-          password: '12345678',
+          password: '83r5^_',
           submit: null
         }}
         validationSchema={Yup.object().shape({
@@ -51,8 +52,9 @@ const LoginForm = () => {
           password: Yup.string().max(255).required('Password is required')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          console.log('data submitted:', values);
-          router.push('/products');
+          setSubmitting(false)
+          const result = await signinAction(values)
+          // router.push('/')
 
         }}
       >

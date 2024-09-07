@@ -4,7 +4,9 @@ import LoginOutlinedIcon from '@mui/icons-material/LoginOutlined';
 import LoginForm from '../../../components/Authentication/LoginForm';
 
 
-export default function Login() {
+
+export default async function Login() {
+
   return (
     <>
       <Box sx={{ minHeight: '50vh'}}>
@@ -65,7 +67,7 @@ export default function Login() {
 
                     <CardContent>
                       <Box sx={{ p: { xs: 2, sm: 3, md: 4, xl: 5 } }}>
-                        <LoginForm/>
+                        <LoginForm />
                       </Box>
                     </CardContent>
                 </Card>

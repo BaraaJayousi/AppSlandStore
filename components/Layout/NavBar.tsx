@@ -4,12 +4,13 @@ import StorefrontIcon from '@mui/icons-material/Storefront';
 import MenuIcon from '@mui/icons-material/Menu';
 import Person4Icon from '@mui/icons-material/Person4';
 import React from "react";
+import { signoutAction } from "@/actions/auth";
 
 const pages = [
   {'label': "Products", 'link': '/products'}
 ];
-const settings = [
-  {'label': 'Logout', 'link':'/auth/login'}
+const settings: {label:string, link:string}  | {}[]= [
+  {'label': 'cart', 'link':'/cart'}
 ];
 
 const NavBar = () =>{
@@ -161,7 +162,12 @@ const NavBar = () =>{
                   onClose={handleCloseUserMenu}
                 >
                   <Typography color="primary" sx={{p:1.5, display:{sx:'flex', md:'none'}}}>Welcome, John Doe</Typography>
-                  {settings.map((setting) => (
+                  <form action={signoutAction}>
+                    <MenuItem >
+                      <Button type='submit'>Log out</Button>
+                    </MenuItem>
+                  </form>
+                  {settings?.map((setting) => (
                     <MenuItem key={setting.label} >
                       <Link href={setting.link} underline="none" color='inherit'>
                         <Typography sx={{ textAlign: 'center' }}>{setting.label}</Typography>
