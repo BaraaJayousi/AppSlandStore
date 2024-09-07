@@ -9,8 +9,8 @@ import { signoutAction } from "@/actions/auth";
 const pages = [
   {'label': "Products", 'link': '/products'}
 ];
-const settings: {label:string, link:string}  | {}[]= [
-  {'label': 'cart', 'link':'/cart'}
+const settings: {label:string, link:string}[] = [
+  // {'label': 'cart', 'link':'/cart'}
 ];
 
 const NavBar = () =>{
@@ -167,7 +167,7 @@ const NavBar = () =>{
                       <Button type='submit'>Log out</Button>
                     </MenuItem>
                   </form>
-                  {settings?.map((setting) => (
+                  {settings.map((setting) => (
                     <MenuItem key={setting.label} >
                       <Link href={setting.link} underline="none" color='inherit'>
                         <Typography sx={{ textAlign: 'center' }}>{setting.label}</Typography>
