@@ -4,7 +4,12 @@ import { redirect } from "next/navigation"
 
 export async function signinAction( values: {username:string, password:string}) {
   // fetch the token and store it as a cookie in the server
-  await fetchToken(values.username, values.password)
+  try{
+    await fetchToken(values.username, values.password)
+
+  }catch(error:any){
+    return error.response?.status
+  }
   // 5. Redirect user
   redirect('/')
 }

@@ -25,6 +25,7 @@ import { Formik } from 'formik';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import { signinAction } from '@/actions/auth';
+import { AxiosError } from 'axios';
 
 const LoginForm = () => {
 
@@ -52,10 +53,16 @@ const LoginForm = () => {
           password: Yup.string().max(255).required('Password is required')
         })}
         onSubmit={async (values, { setErrors, setStatus, setSubmitting }) => {
-          setSubmitting(false)
-          const result = await signinAction(values)
-          // router.push('/')
-
+          setSubmitting(true)
+          try{
+            const response = await signinAction(values)
+            if(response === 401){
+              throw 'Incorrect Username or Password, try password: 83r5^_   username: mor_2314'
+            }
+          }catch(err: any){
+            setErrors({submit : err})
+            setSubmitting(false)
+          }
         }}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (

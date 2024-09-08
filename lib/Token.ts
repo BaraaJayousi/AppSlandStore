@@ -5,17 +5,12 @@ import { _postSignIn } from '@/Axios'
 export async function fetchToken(username: string, password:string) {
   // const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
   // const session = await encrypt({ userId, expiresAt })
-  try{
     const token = await _postSignIn(username, password)
     cookies().set('token', token, {
       httpOnly: true,
       secure: true,
       path: '/',
     })
-  }
-  catch(error){
-    console.log('error occurred with login: ', error)
-  }  
 }
 
 export async function deleteToken(){
